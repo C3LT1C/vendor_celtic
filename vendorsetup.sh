@@ -1,4 +1,4 @@
-for combo in $(curl -s https://raw.githubusercontent.com/RenderKernels/build-targets/master/products | sed -e 's/#.*$//' | awk {'print $1'})
+for combo in $(curl -s https://raw.githubusercontent.com/RenderKernels/build-targets/lp5.1/products | sed -e 's/#.*$//' | awk {'print $1'})
 do
- echo -e "\033[32m" $combo"\033[0m"
+ add_lunch_combo render_$combo-kernel
 done
