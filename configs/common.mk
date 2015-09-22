@@ -1,0 +1,3 @@
+BUILD_VERSION := v0.1
+KBUILD_BUILD_USER := RenderBroken
+KBUILD_BUILD_HOST := RenderServer.net
