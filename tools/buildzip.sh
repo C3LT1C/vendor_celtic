@@ -1,5 +1,10 @@
-. build/envsetup.sh
-function build_kernel(){
+function sync_source()
+{
+  repo sync -f
+  synced=1
+}
+function build_kernel()
+{
   make kernel
 }
 function build_zip()
@@ -9,12 +14,26 @@ function build_zip()
   case $i in
     Y|y)
     make buildzip
+    make printcompletion
     ;;
     N|n)
     ;;
   esac
 }
+echo "Sync sources?"
+read b
+case $b in
+  Y|y)
+  sync_source
+  ;;
+  N|n)
+  ;;
+esac
+source build/envsetup.sh
 echo "Please choose your device"
+if [ "$synced" ]; then
+  make kernelclean
+fi
 lunch
 echo "Building source. Please wait."
 build_kernel 1> ./build-log-$RENDER_PRODUCT.log 2>&1
@@ -31,8 +50,6 @@ case $built in
   break
   ;;
   1 )
-  echo "Following files have been successfuly created"
-  ls -R $OUT_DIR/$RENDER_PRODUCT
   build_zip
   ;;
 esac
