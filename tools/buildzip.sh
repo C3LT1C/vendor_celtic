@@ -9,32 +9,48 @@ function build_kernel()
 }
 function build_zip()
 {
-  echo "Build zip now?"
-  read i
+  while read -p "Build zip now  [Y|y or N|n]? " i
+  do
+  echo ""
   case $i in
-    Y|y)
+    Y|y )
     make buildzip
     make printcompletion
+    break
     ;;
-    N|n)
+    N|n )
+    break
+    ;;
+    * )
+    echo "Invalid entry"
+    echo ""
     ;;
   esac
+  done
 }
-echo "Sync sources?"
-read b
+while read -p "Sync sources [Y|y or N|n]? " b
+do
+echo ""
 case $b in
-  Y|y)
+  Y|y )
   sync_source
+  break
   ;;
-  N|n)
+  N|n )
+  break
+  ;;
+  * )
+  echo "Invalid entry"
+  echo ""
   ;;
 esac
+done
 source build/envsetup.sh
 echo "Please choose your device"
+lunch
 if [ "$synced" ]; then
   make kernelclean
 fi
-lunch
 echo "Building source. Please wait."
 build_kernel 1> ./build-log-$RENDER_PRODUCT.log 2>&1
 if [ $OUT_DIR/$RENDER_PRODUCT/zImage ]; then
