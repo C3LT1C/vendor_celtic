@@ -14,6 +14,9 @@ function build_zip()
   echo ""
   case $i in
     Y|y )
+    if [ "$TARGET_BUILD_VARIANT" == "bootimg" ]; then
+      make buildbootimg
+    fi
     make buildzip
     make printcompletion
     break
@@ -28,6 +31,7 @@ function build_zip()
   esac
   done
 }
+unset synced
 while read -p "Sync sources [Y|y or N|n]? " b
 do
 echo ""
@@ -66,6 +70,11 @@ case $built in
   break
   ;;
   1 )
+  if [ "$TARGET_BUILD_VARIANT" != "kernel" ]; then
   build_zip
+  else
+  echo "Built zImage"
+  echo "Skipping zip creation ..."
+  fi
   ;;
 esac
