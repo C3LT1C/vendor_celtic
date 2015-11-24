@@ -53,28 +53,22 @@ source build/envsetup.sh
 echo "Please choose your device"
 lunch
 if [ "$synced" ]; then
-  make kernelclean
+  make kernelclobber
 fi
 echo "Building source. Please wait."
-build_kernel 1> ./build-log-$RENDER_PRODUCT.log 2>&1
-if [ $OUT_DIR/$RENDER_PRODUCT/zImage ]; then
+if build_kernel 1> ./build-log-$RENDER_PRODUCT.log 2>&1 ; then
   clear
   echo "Built successful"
-  built=1
-else
-  built=0
-fi
-case $built in
-  0 )
-  echo "Please check ./build-log-$RENDER_PRODUCT.log for errors in unsuccessful build"
-  break
-  ;;
-  1 )
   if [ "$TARGET_BUILD_VARIANT" != "kernel" ]; then
   build_zip
   else
-  echo "Built zImage"
   echo "Skipping zip creation ..."
   fi
-  ;;
-esac
+else
+    echo "Errors at the following lines; Build unsuccessful"
+  for line in $(grep -n "error" ./build-log-$RENDER_PRODUCT.log | cut -f1 -d:)
+  do
+    cat ./build-log-$RENDER_PRODUCT.log | sed "${line}!d"
+  done
+  echo "Check ./build-log-$RENDER_PRODUCT.log for verbosity"
+fi
