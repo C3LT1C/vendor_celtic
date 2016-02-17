@@ -54,9 +54,12 @@ echo "Please choose your device"
 lunch
 if [ "$synced" ]; then
   make kernelclobber
+else
+  echo "Preparing source for build"
+  make kernelclean
 fi
 echo "Building source. Please wait."
-if build_kernel 1> ./build-log-$BLACK_PRODUCT.log 2>&1 ; then
+if build_kernel 1> ./build-log-$BLACK_PRODUCT.log 2>&1; then
   clear
   echo "Built successful"
   if [ "$TARGET_BUILD_VARIANT" != "kernel" ]; then
