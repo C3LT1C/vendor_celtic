@@ -56,7 +56,7 @@ if [ "$synced" ]; then
   make kernelclobber
 fi
 echo "Building source. Please wait."
-if build_kernel 1> ./build-log-$RENDER_PRODUCT.log 2>&1 ; then
+if build_kernel 1> ./build-log-$BLACK_PRODUCT.log 2>&1 ; then
   clear
   echo "Built successful"
   if [ "$TARGET_BUILD_VARIANT" != "kernel" ]; then
@@ -66,9 +66,9 @@ if build_kernel 1> ./build-log-$RENDER_PRODUCT.log 2>&1 ; then
   fi
 else
     echo "Errors at the following lines; Build unsuccessful"
-  for line in $(grep -n "error" ./build-log-$RENDER_PRODUCT.log | cut -f1 -d:)
+  for line in $(grep -n "error" ./build-log-$BLACK_PRODUCT.log | cut -f1 -d:)
   do
-    cat ./build-log-$RENDER_PRODUCT.log | sed "${line}!d"
+    cat ./build-log-$BLACK_PRODUCT.log | sed "${line}!d"
   done
-  echo "Check ./build-log-$RENDER_PRODUCT.log for verbosity"
+  echo "Check ./build-log-$BLACK_PRODUCT.log for verbosity"
 fi

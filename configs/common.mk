@@ -1,5 +1,5 @@
 BUILD_VERSION := v0.1
-KBUILD_BUILD_USER := RenderBroken
-KBUILD_BUILD_HOST := RenderServer.net
+KBUILD_BUILD_USER := $(git config user.name)
+KBUILD_BUILD_HOST := B14CKB1RD-Kernel
 
-PACKAGE_TARGET_NAME := RenderKernels-$(RENDER_PRODUCT)-$(BUILD_VERSION).$(shell date -u +%m.%d).zip
+PACKAGE_TARGET_NAME := $(KBUILD_BUILD_HOST)-$(BLACK_PRODUCT)-$(BUILD_VERSION).$(shell date -u +%m.%d).zip
