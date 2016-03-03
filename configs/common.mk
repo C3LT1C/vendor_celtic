@@ -1,5 +1,3 @@
-BUILD_VERSION := v0.1
 KBUILD_BUILD_USER := $(shell git config user.name)
-KBUILD_BUILD_HOST := B14CKB1RD-Kernel
 
-PACKAGE_TARGET_NAME := $(KBUILD_BUILD_HOST)-$(BLACK_PRODUCT)-$(BUILD_VERSION).$(shell date -u +%m.%d).zip
+PACKAGE_TARGET_NAME := $(shell grep -r "EXTRAVERSION = -" $(ANDROID_BUILD_TOP)/$(PRODUCT_KERNEL_SOURCE)/Makefile | sed 's/EXTRAVERSION = -//')-$(shell git -C $(ANDROID_BUILD_TOP)/$(PRODUCT_KERNEL_SOURCE) log --pretty=format:'%h' -n 1)-$(BLACK_PRODUCT)-$(shell date -u +%m.%d).zip
